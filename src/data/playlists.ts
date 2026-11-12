@@ -94,10 +94,10 @@ export const musicPlaylists: MusicPlaylist[] = [
     },
   },
   {
-    // TODO: add a cover in public/playlists/ and set `cover` below.
     id: "en-espanol",
     title: "Mujeres del Blues en Español",
     description: "Mujeres del blues de Iberoamérica haciendo blues femenino en español.",
+    cover: assetUrl("playlists/en-espanol.webp"),
     links: {
       Spotify: "https://open.spotify.com/playlist/7H9TVF8E2qzpUlkd9eCwIr",
       "YouTube Music": "https://music.youtube.com/playlist?list=PLXQvJAIjGV48",

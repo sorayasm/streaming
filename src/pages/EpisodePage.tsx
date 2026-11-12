@@ -14,6 +14,7 @@ import { content } from "../content";
 import {
   adjacentEpisodes,
   episodeHref,
+  episodeImage,
   episodeLabel,
   episodesOfSeason,
   getEpisode,
@@ -102,13 +103,17 @@ export function EpisodePage({ id }: { id: string }) {
             currentId={episode.id}
             currentLabel={content.episode.nowPlaying}
             episodeLabel={label}
-            episodes={episodesOfSeason(season.number).map((item) => ({
-              id: item.id,
-              number: item.number,
-              title: item.title,
-              imageUrl: thumbnailUrl(item.youtubeId),
-              href: episodeHref(item.id),
-            }))}
+            episodes={episodesOfSeason(season.number).map((item) => {
+              const image = episodeImage(item);
+              return {
+                id: item.id,
+                number: item.number,
+                title: item.title,
+                imageUrl: image.url,
+                imageAspectRatio: image.aspectRatio,
+                href: episodeHref(item.id),
+              };
+            })}
           />
         </Box>
       </Box>

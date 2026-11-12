@@ -3,12 +3,13 @@ import { Button, ContentRail, Hero, MediaCard } from "@sorayasm/vietri-ds";
 import { content } from "../content";
 import {
   episodeHref,
+  episodeImage,
   episodeLabel,
   episodesOfSeason,
   latestEpisode,
   seasonsNewestFirst,
-  thumbnailUrl,
 } from "../data/episodes";
+import { heroImage } from "../data/hero";
 
 export function HomePage() {
   const latest = latestEpisode();
@@ -16,6 +17,8 @@ export function HomePage() {
   return (
     <>
       <Hero
+        image={heroImage()}
+        imagePosition="80% 20%"
         eyebrow={content.hero.eyebrow}
         title={content.siteName}
         description={content.hero.description}
@@ -38,15 +41,19 @@ export function HomePage() {
             previousLabel={content.rail.previous}
             nextLabel={content.rail.next}
           >
-            {episodesOfSeason(season.number).map((episode) => (
-              <MediaCard
-                key={episode.id}
-                title={episode.title}
-                meta={episodeLabel(season, episode.number)}
-                imageUrl={thumbnailUrl(episode.youtubeId)}
-                href={episodeHref(episode.id)}
-              />
-            ))}
+            {episodesOfSeason(season.number).map((episode) => {
+              const image = episodeImage(episode);
+              return (
+                <MediaCard
+                  key={episode.id}
+                  title={episode.title}
+                  meta={episodeLabel(season, episode.number)}
+                  imageUrl={image.url}
+                  aspectRatio={image.aspectRatio}
+                  href={episodeHref(episode.id)}
+                />
+              );
+            })}
           </ContentRail>
         ))}
       </Container>

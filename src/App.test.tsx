@@ -6,6 +6,7 @@ import App from "./App";
 import { content } from "./content";
 import { episodes, getEpisode, seasons } from "./data/episodes";
 import { musicPlaylists } from "./data/playlists";
+import indexHtml from "../index.html?raw";
 
 async function a11yViolations() {
   const results = await axe.run(document.body, {
@@ -25,6 +26,10 @@ async function a11yViolations() {
   );
 }
 
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function goTo(hash: string) {
   window.location.hash = hash;
 }
@@ -39,7 +44,11 @@ describe("Home", () => {
     render(<App />);
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     expect(screen.getByRole("heading", { level: 1, name: content.siteName })).toBeInTheDocument();
-    expect(document.documentElement.lang).toBe("es");
+  });
+
+  it("declares Spanish as the page language", () => {
+    // The language lives in index.html (jsdom does not load it), so the file itself is checked.
+    expect(indexHtml).toMatch(/<html lang="es">/);
   });
 
   it("shows one shelf per season, the newest first", () => {
@@ -137,9 +146,12 @@ describe("Episode page", () => {
   it("has links to the previous and the next episode", async () => {
     goTo("#/capitulo/t1e05");
     render(<App />);
-    const previous = await screen.findByRole("link", { name: /^Anterior: / });
-    const next = screen.getByRole("link", { name: /^Siguiente: / });
-    expect(previous).toHaveAccessibleName(`Anterior: ${getEpisode("t1e04")!.title}`);
+    const previous = await screen.findByRole("link", { name: /^Anterior/ });
+    const next = screen.getByRole("link", { name: /^Siguiente/ });
+    // The name is "Anterior" plus the hidden title of that episode; whether a space
+    // comes before the colon depends on the browser, so only the title is checked.
+    expect(previous).toHaveAccessibleName(new RegExp(escapeRegExp(getEpisode("t1e04")!.title)));
+    expect(next).toHaveAccessibleName(new RegExp(escapeRegExp(getEpisode("t1e06")!.title)));
     expect(previous).toHaveAttribute("href", "#/capitulo/t1e04");
     expect(next).toHaveAttribute("href", "#/capitulo/t1e06");
   });
@@ -183,7 +195,7 @@ describe("Other pages", () => {
     }
     // Covers are decorative: the title already names each playlist.
     const covers = container.querySelectorAll('img[src*="playlists/"]');
-    expect(covers).toHaveLength(musicPlaylists.length);
+    expect(covers).toHaveLength(musicPlaylists.filter((playlist) => playlist.cover).length);
     covers.forEach((cover) => expect(cover).toHaveAttribute("alt", ""));
   });
 
@@ -199,6 +211,22 @@ describe("Other pages", () => {
     const spotify = screen.getByRole("link", { name: /^Spotify – Grandes Mujeres del Blues/ });
     expect(spotify.getAttribute("href")).toContain("open.spotify.com");
     expect(spotify).toHaveAttribute("target", "_blank");
+  });
+
+  it("a playlist opens its own list on a service, not the profile", async () => {
+    goTo("#/playlists");
+    render(<App />);
+    await screen.findByRole("heading", { level: 1, name: content.playlists.title });
+
+    expect(
+      screen.getByRole("link", { name: /^Spotify – Blues Clásico Femenino/ })
+    ).toHaveAttribute("href", "https://open.spotify.com/playlist/2LSFMVQlfvPDTyrffmmCNE");
+    expect(
+      screen.getByRole("link", { name: /^YouTube – Blues Clásico Femenino/ })
+    ).toHaveAttribute(
+      "href",
+      "https://www.youtube.com/playlist?list=PLajddc99FTAsc_4F5HWMtltv0KDlbTO-t"
+    );
   });
 
   it("the about page explains the podcast and lists the seasons", async () => {

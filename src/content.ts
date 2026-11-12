@@ -45,7 +45,7 @@ export const content = {
     intro:
       "“El Blues es Femenino” nació como un podcast en Goodstock, con el propósito de visibilizar a las mujeres que han marcado la historia del blues en Chile, desde una mirada crítica y feminista. Luego evolucionó a un minipodcast en YouTube, con cápsulas breves que acercan estas historias a nuevas audiencias.",
     border:
-      "A finales de 2025, el proyecto cruzó fronteras con una columna en HideAway Blues —Bahía Blanca Blues, transmitido por Taboo Radio (Argentina)—, llevando la voz de las mujeres del blues chileno a otros territorios y tejiendo redes entre escenas latinoamericanas.",
+      "A finales de 2025, el proyecto cruzó fronteras con una columna en HideAway Blues  - Bahía Blanca Blues, transmitido por Taboo Radio (Argentina) - , llevando la voz de las mujeres del blues chileno a otros territorios y tejiendo redes entre escenas latinoamericanas.",
     whyTitle: "¿Por qué el blues es femenino?",
     why:
       "En nuestro programa exploramos el blues desde una perspectiva feminista. Revisamos su evolución desde los primeros acordes del blues clásico femenino hasta la vibrante escena actual de mujeres del blues en Chile.",
