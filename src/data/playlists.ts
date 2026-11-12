@@ -119,15 +119,22 @@ export interface PodcastPlaylist {
   id: string;
   title: string;
   description: string;
+  /** Square picture, a file inside `public/`. Without it the card shows a plain placeholder. */
+  cover?: string;
   platforms: { name: string; href: string }[];
 }
 
-/** Video playlists of the podcast itself. */
+/**
+ * Video playlists of the podcast itself. To hide this whole section of the page,
+ * leave the list empty: `export const podcastPlaylists: PodcastPlaylist[] = [];`
+ */
 export const podcastPlaylists: PodcastPlaylist[] = [
   {
     id: "temporada-1-youtube",
     title: "Temporada 1 en YouTube",
     description: "Los 21 capítulos de la primera temporada, en orden.",
+    // The flyer of the premiere episode: the host and the name of the podcast.
+    cover: assetUrl("flyers/t1e01.webp"),
     platforms: [
       {
         name: "YouTube",

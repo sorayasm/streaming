@@ -213,6 +213,19 @@ describe("Other pages", () => {
     expect(spotify).toHaveAttribute("target", "_blank");
   });
 
+  it("the season 1 card of the podcast has a cover: the flyer of the premiere", async () => {
+    goTo("#/playlists");
+    const { container } = render(<App />);
+    await screen.findByRole("heading", { level: 1, name: content.playlists.title });
+
+    const heading = screen.getByRole("heading", { level: 3, name: "Temporada 1 en YouTube" });
+    const card = heading.closest(".MuiCard-root") as HTMLElement;
+    const cover = card.querySelector("img");
+    expect(cover?.getAttribute("src")).toContain("flyers/t1e01.webp");
+    expect(cover).toHaveAttribute("alt", "");
+    expect(container).toBeTruthy();
+  });
+
   it("a playlist opens its own list on a service, not the profile", async () => {
     goTo("#/playlists");
     render(<App />);

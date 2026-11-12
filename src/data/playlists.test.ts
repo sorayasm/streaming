@@ -121,10 +121,16 @@ describe("links", () => {
   });
 
   it("podcast playlists have a title, a description and at least one platform", () => {
-    expect(podcastPlaylists.length).toBeGreaterThan(0);
+    // The list can be empty on purpose (it hides that section of the page).
     for (const playlist of podcastPlaylists) {
       expect(playlist.title.trim(), playlist.id).not.toBe("");
       expect(playlist.platforms.length, playlist.id).toBeGreaterThan(0);
+    }
+  });
+
+  it("a podcast playlist that has a cover points to a file in public/", () => {
+    for (const playlist of podcastPlaylists) {
+      if (playlist.cover) expect(playlist.cover, playlist.id).toMatch(/\.webp$/);
     }
   });
 });

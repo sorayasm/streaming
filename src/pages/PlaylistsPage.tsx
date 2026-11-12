@@ -42,22 +42,27 @@ export function PlaylistsPage() {
         ))}
       </Box>
 
-      <Typography component="h2" variant="h4" sx={{ mt: 8, mb: 3 }}>
-        {content.playlists.podcastTitle}
-      </Typography>
-      <Box sx={grid}>
-        {podcastPlaylists.map((playlist) => (
-          <PlaylistCard
-            key={playlist.id}
-            level={3}
-            title={playlist.title}
-            description={playlist.description}
-            platforms={playlist.platforms}
-            platformsLabel={content.playlists.listenOn}
-            externalLabel={content.footer.external}
-          />
-        ))}
-      </Box>
+      {podcastPlaylists.length > 0 && (
+        <>
+          <Typography component="h2" variant="h4" sx={{ mt: 8, mb: 3 }}>
+            {content.playlists.podcastTitle}
+          </Typography>
+          <Box sx={grid}>
+            {podcastPlaylists.map((playlist) => (
+              <PlaylistCard
+                key={playlist.id}
+                level={3}
+                title={playlist.title}
+                description={playlist.description}
+                imageUrl={playlist.cover}
+                platforms={playlist.platforms}
+                platformsLabel={content.playlists.listenOn}
+                externalLabel={content.footer.external}
+              />
+            ))}
+          </Box>
+        </>
+      )}
     </Container>
   );
 }
