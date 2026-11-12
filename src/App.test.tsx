@@ -6,6 +6,7 @@ import App from "./App";
 import { content } from "./content";
 import { episodes, getEpisode, seasons } from "./data/episodes";
 import { musicPlaylists } from "./data/playlists";
+import { LAST_EPISODE_KEY } from "./data/progress";
 import indexHtml from "../index.html?raw";
 
 async function a11yViolations() {
@@ -37,6 +38,7 @@ function goTo(hash: string) {
 beforeEach(() => {
   window.location.hash = "";
   document.title = "";
+  localStorage.clear();
 });
 
 describe("Home", () => {
@@ -291,10 +293,90 @@ describe("Navigation", () => {
   });
 });
 
+describe("Search", () => {
+  it("shows every episode at first, with their count", async () => {
+    goTo("#/buscar");
+    render(<App />);
+    expect(
+      await screen.findByRole("heading", { level: 1, name: content.search.title })
+    ).toBeInTheDocument();
+    expect(screen.getByText(content.search.count(episodes.length))).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(episodes.length);
+  });
+
+  it("filters while typing, without caring about accents", async () => {
+    const user = userEvent.setup();
+    goTo("#/buscar");
+    render(<App />);
+    await user.type(await screen.findByRole("searchbox", { name: content.search.label }), "nahi");
+    expect(screen.getByText(content.search.count(1))).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Entrevista a Nahí Azul de Intensa Bravura" })
+    ).toHaveAttribute("href", "#/capitulo/t2e04");
+  });
+
+  it("says so when nothing matches", async () => {
+    const user = userEvent.setup();
+    goTo("#/buscar");
+    render(<App />);
+    await user.type(await screen.findByRole("searchbox", { name: content.search.label }), "zzz");
+    expect(screen.getByText(content.search.empty("zzz"))).toBeInTheDocument();
+    expect(screen.queryAllByRole("heading", { level: 3 })).toHaveLength(0);
+  });
+
+  it("has its link in the menu, marked as the current page", async () => {
+    goTo("#/buscar");
+    render(<App />);
+    await screen.findByRole("heading", { level: 1, name: content.search.title });
+    await userEvent.click(screen.getByRole("button", { name: content.nav.menu }));
+    const nav = await screen.findByRole("navigation", { name: content.nav.ariaLabel });
+    expect(within(nav).getByRole("link", { name: content.nav.search })).toHaveAttribute(
+      "aria-current",
+      "page"
+    );
+  });
+});
+
+describe("Continue watching", () => {
+  it("says what the main button opens", () => {
+    render(<App />);
+    const latest = episodes.find((episode) => episode.id === "t3e04")!;
+    expect(screen.getByText(`${content.hero.latestLabel}: ${latest.title}`)).toBeInTheDocument();
+  });
+
+  it("remembers the episode that was opened", async () => {
+    goTo("#/capitulo/t1e05");
+    render(<App />);
+    await screen.findByRole("heading", { level: 1, name: "Entrevista a Syldaza" });
+    expect(localStorage.getItem(LAST_EPISODE_KEY)).toBe("t1e05");
+  });
+
+  it("offers to continue where the person was", () => {
+    localStorage.setItem(LAST_EPISODE_KEY, "t1e05");
+    render(<App />);
+    expect(screen.getByRole("link", { name: content.hero.continue })).toHaveAttribute(
+      "href",
+      "#/capitulo/t1e05"
+    );
+    expect(
+      screen.getByText(`${content.hero.continueLabel}: Entrevista a Syldaza`)
+    ).toBeInTheDocument();
+  });
+});
+
+describe("Share", () => {
+  it("every episode has a share button", async () => {
+    goTo("#/capitulo/t1e05");
+    render(<App />);
+    expect(await screen.findByRole("button", { name: content.episode.share })).toBeInTheDocument();
+  });
+});
+
 describe("Accessibility (axe, WCAG 2.2 A and AA)", () => {
   it.each([
     ["home", ""],
     ["an episode", "#/capitulo/t1e05"],
+    ["the search page", "#/buscar"],
     ["the playlists", "#/playlists"],
     ["the about page", "#/sobre"],
     ["the not found page", "#/nada"],

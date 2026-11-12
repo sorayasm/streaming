@@ -4,6 +4,7 @@ export type Route =
   | { name: "home" }
   | { name: "episode"; id: string }
   | { name: "playlists" }
+  | { name: "search" }
   | { name: "about" }
   | { name: "notFound" };
 
@@ -12,6 +13,7 @@ export type Route =
  *   ""  "#"  "#/"          → home
  *   "#/capitulo/t1e05"     → episode
  *   "#/playlists"          → playlists
+ *   "#/buscar"             → search
  *   "#/sobre"              → about
  */
 export function parseHash(hash: string): Route {
@@ -19,6 +21,7 @@ export function parseHash(hash: string): Route {
   if (parts.length === 0) return { name: "home" };
   if (parts.length === 1 && parts[0] === "playlists") return { name: "playlists" };
   if (parts.length === 1 && parts[0] === "sobre") return { name: "about" };
+  if (parts.length === 1 && parts[0] === "buscar") return { name: "search" };
   if (parts.length === 2 && parts[0] === "capitulo") {
     return { name: "episode", id: decodeURIComponent(parts[1]) };
   }

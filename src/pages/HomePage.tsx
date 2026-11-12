@@ -1,5 +1,6 @@
 import Container from "@mui/material/Container";
-import { Button, ContentRail, Hero, MediaCard } from "@sorayasm/vietri-ds";
+import Typography from "@mui/material/Typography";
+import { Button, ContentRail, Hero, Icon, MediaCard, icons } from "@sorayasm/vietri-ds";
 import { content } from "../content";
 import {
   episodeHref,
@@ -10,22 +11,43 @@ import {
   seasonsNewestFirst,
 } from "../data/episodes";
 import { heroImage } from "../data/hero";
+import { getLastEpisode } from "../data/progress";
 
 export function HomePage() {
-  const latest = latestEpisode();
+  // If the person already opened an episode, the main button takes them back to it.
+  const last = getLastEpisode();
+  const featured = last ?? latestEpisode();
+  const featuredLabel = last ? content.hero.continueLabel : content.hero.latestLabel;
 
   return (
     <>
       <Hero
+        accentRule
         image={heroImage()}
         imagePosition="80% 20%"
         eyebrow={content.hero.eyebrow}
         title={content.siteName}
-        description={content.hero.description}
+        description={
+          <>
+            {content.hero.description}
+            {/* Says what the main button opens, so nobody has to guess. */}
+            <Typography
+              component="span"
+              sx={{ display: "block", mt: 2, fontWeight: 600, color: "text.primary" }}
+            >
+              {featuredLabel}: {featured.title}
+            </Typography>
+          </>
+        }
         actions={
           <>
-            <Button size="large" href={episodeHref(latest.id)}>
-              {content.hero.latest}
+            <Button
+              size="large"
+              variant="contained"
+              href={episodeHref(featured.id)}
+              startIcon={<Icon icon={icons.Play} size={20} />}
+            >
+              {last ? content.hero.continue : content.hero.latest}
             </Button>
             <Button size="large" variant="outlined" href="#/playlists">
               {content.hero.listen}

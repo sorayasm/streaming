@@ -6,6 +6,10 @@ describe("parseHash", () => {
     expect(parseHash(hash)).toEqual({ name: "home" });
   });
 
+  it("recognizes the search page", () => {
+    expect(parseHash("#/buscar")).toEqual({ name: "search" });
+  });
+
   it("recognizes the playlists and about pages", () => {
     expect(parseHash("#/playlists")).toEqual({ name: "playlists" });
     expect(parseHash("#/sobre")).toEqual({ name: "about" });
@@ -19,7 +23,7 @@ describe("parseHash", () => {
     expect(parseHash("#/capitulo/a%20b")).toEqual({ name: "episode", id: "a b" });
   });
 
-  it.each(["#/nada", "#/capitulo", "#/capitulo/a/b", "#/playlists/x"])(
+  it.each(["#/nada", "#/capitulo", "#/capitulo/a/b", "#/playlists/x", "#/buscar/x"])(
     "%s is not found",
     (hash) => {
       expect(parseHash(hash)).toEqual({ name: "notFound" });

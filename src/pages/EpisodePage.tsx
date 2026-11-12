@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -10,6 +11,7 @@ import {
   VisuallyHidden,
   icons,
 } from "@sorayasm/vietri-ds";
+import { ShareButton } from "../components/ShareButton";
 import { content } from "../content";
 import {
   adjacentEpisodes,
@@ -21,10 +23,17 @@ import {
   getSeason,
   thumbnailUrl,
 } from "../data/episodes";
+import { saveLastEpisode } from "../data/progress";
 import { NotFoundPage } from "./NotFoundPage";
 
 export function EpisodePage({ id }: { id: string }) {
   const episode = getEpisode(id);
+
+  // Remember where the person was, so the home page can offer to continue.
+  useEffect(() => {
+    if (episode) saveLastEpisode(episode.id);
+  }, [episode]);
+
   if (!episode) return <NotFoundPage />;
 
   const season = getSeason(episode.season);
@@ -36,7 +45,6 @@ export function EpisodePage({ id }: { id: string }) {
       <Button
         href="#/"
         variant="text"
-        color="secondary"
         startIcon={<Icon icon={icons.ChevronLeft} />}
         sx={{ mb: 2 }}
       >
@@ -87,6 +95,7 @@ export function EpisodePage({ id }: { id: string }) {
                 <VisuallyHidden>{`: ${next.title}`}</VisuallyHidden>
               </Button>
             )}
+            <ShareButton />
           </Stack>
         </Box>
 

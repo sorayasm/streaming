@@ -57,11 +57,27 @@ To add a flyer to another episode:
 
 Episodes without a flyer keep their video thumbnail. The page title text is separate from the image, so screen readers and search engines read the episode title, not the flyer.
 
+## Colors
+
+Orange is for acting; violet and lilac are for everything else (the design system's README has the table and the contrast numbers, under "Interactive color"):
+
+- Buttons: burnt orange with white text; the large ones (home, banners) are the brand orange with a bold white label.
+- Outlined buttons (previous, share, playlists) have a lilac line; orange appears on hover and with the keyboard.
+- Menu links, arrows and the scrollbar of the rows are orange, over the dark flat background.
+- The footer is a flat violet with white links and a thin orange rule on top. The home title is white with a short orange rule.
+
+## Search, continue watching and sharing
+
+- **Search** (`#/buscar`): filters the 29 episodes while you type, ignoring accents and case, by guest, band, season or kind ("columna"). It announces the number of results to screen readers.
+- **Continue watching**: the last episode you opened is remembered **only in your browser** (`localStorage`). The main button of the home page says what it opens and, if there is a remembered episode, becomes "Continuar viendo".
+- **Share**: each episode has a button that opens the share sheet of the phone, or copies the link where there is none.
+- **Preview**: `index.html` has the Open Graph tags and `public/og.jpg` (1200 x 630), which is what WhatsApp and the social networks show when the site is shared.
+
 ## The picture behind the home page
 
 The big picture at the top of the home page is the thumbnail of the latest episode, darkened so the text stays readable. If YouTube has no large thumbnail for that video, the hero shows its plain purple surface instead.
 
-To use your own picture (a concert photo, the podcast's key art), save it in `public/` and set it in `src/data/hero.ts`. Use a wide picture (16:9, around 1920 × 1080) **without text on it**, because the page's text goes over the left side, and keep it under about 200 KB. The picture is decorative: do not put information in it.
+To use your own picture (a concert photo, the podcast's key art), save it in `public/` (for example `public/hero.webp`) and write its name in `HERO_FILE`, in `src/data/hero.ts`: `const HERO_FILE: string | null = "hero.webp";`. To go back to the thumbnail, set it to `null`. To move the picture up or down inside the banner, change `imagePosition` in `src/pages/HomePage.tsx` (for example `"center 30%"` or `"center top"`). Use a wide picture (16:9, around 1920 × 1080) **without text on it**, because the page's text goes over the left side, and keep it under about 200 KB. The picture is decorative: do not put information in it.
 
 ## Adding an episode
 

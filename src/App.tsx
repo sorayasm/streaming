@@ -12,6 +12,7 @@ import { EpisodePage } from "./pages/EpisodePage";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { PlaylistsPage } from "./pages/PlaylistsPage";
+import { SearchPage } from "./pages/SearchPage";
 import { useHashRoute, type Route } from "./router/useHashRoute";
 
 function pageTitle(route: Route): string {
@@ -25,6 +26,8 @@ function pageTitle(route: Route): string {
     }
     case "playlists":
       return `${content.playlists.title} · ${site}`;
+    case "search":
+      return `${content.search.title} · ${site}`;
     case "about":
       return `${content.about.title} · ${site}`;
     case "notFound":
@@ -82,8 +85,10 @@ function Page() {
         ariaLabel={content.nav.ariaLabel}
         menuLabel={content.nav.menu}
         closeLabel={content.nav.close}
+        accentLinks
         links={[
           { label: content.nav.home, href: "#/", current: route.name === "home" || route.name === "episode" },
+          { label: content.nav.search, href: "#/buscar", current: route.name === "search" },
           { label: content.nav.playlists, href: "#/playlists", current: route.name === "playlists" },
           { label: content.nav.about, href: "#/sobre", current: route.name === "about" },
         ]}
@@ -91,6 +96,7 @@ function Page() {
       <Box component="main" id="content" tabIndex={-1} sx={{ outline: "none", minHeight: "60vh" }}>
         {route.name === "home" && <HomePage />}
         {route.name === "episode" && <EpisodePage id={route.id} />}
+        {route.name === "search" && <SearchPage />}
         {route.name === "playlists" && <PlaylistsPage />}
         {route.name === "about" && <AboutPage />}
         {route.name === "notFound" && <NotFoundPage />}

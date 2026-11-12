@@ -10,7 +10,7 @@ export function NotFoundPage() {
         title={content.notFound.title}
         description={content.notFound.description}
       />
-      <Button href="#/" sx={{ mt: 4 }}>
+      <Button href="#/" variant="contained" sx={{ mt: 4 }}>
         {content.notFound.back}
       </Button>
     </Container>
