@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseHash } from "./useHashRoute";
+import { parseHash, parsePath } from "./useHashRoute";
 
 describe("parseHash", () => {
   it.each(["", "#", "#/", "/"])("%j is the home page", (hash) => {
@@ -29,4 +29,19 @@ describe("parseHash", () => {
       expect(parseHash(hash)).toEqual({ name: "notFound" });
     }
   );
+});
+
+describe("parsePath", () => {
+  it("reads the static pages", () => {
+    expect(parsePath("/")).toEqual({ name: "home" });
+    expect(parsePath("/index.html")).toEqual({ name: "home" });
+    expect(parsePath("/capitulo/t1e05/")).toEqual({ name: "episode", id: "t1e05" });
+    expect(parsePath("/sobre/")).toEqual({ name: "about" });
+    expect(parsePath("/playlists/index.html")).toEqual({ name: "playlists" });
+  });
+
+  it("ignores the folder the site is served from", () => {
+    expect(parsePath("/repo/", "/repo/")).toEqual({ name: "home" });
+    expect(parsePath("/repo/capitulo/t3e04/", "/repo/")).toEqual({ name: "episode", id: "t3e04" });
+  });
 });

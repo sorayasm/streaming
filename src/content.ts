@@ -1,6 +1,12 @@
 /** Every text of the interface, in Spanish. The podcast content itself lives in `data/`. */
 export const content = {
   siteName: "El Blues es Femenino",
+  /** Who hosts the podcast. Used on the page and in the data for search engines. */
+  host: {
+    name: "Soraya Sacaan",
+    role: "Conductora",
+    instagram: "https://www.instagram.com/sorayasacaan/",
+  },
   tagline: "Todo sobre las Mujeres del Blues en Chile",
   skip: "Saltar al contenido",
   nav: {
@@ -15,7 +21,7 @@ export const content = {
   hero: {
     eyebrow: "Podcast de Mujeres del Blues",
     description:
-      "Todo sobre las mujeres que han marcado la historia del blues en Chile, desde una mirada crítica y feminista: entrevistas, cápsulas y columnas.",
+      "Todo sobre las mujeres que han marcado la historia del blues en Chile, desde una mirada crítica y feminista: entrevistas, cápsulas y columnas. Conducido por Soraya Sacaan.",
     latest: "Ver lo más reciente",
     continue: "Continuar viendo",
     latestLabel: "Lo más reciente",
@@ -59,12 +65,26 @@ export const content = {
   about: {
     title: "Sobre el podcast",
     intro:
-      "“El Blues es Femenino” nació como un podcast en Goodstock, con el propósito de visibilizar a las mujeres que han marcado la historia del blues en Chile, desde una mirada crítica y feminista. Luego evolucionó a un minipodcast en YouTube, con cápsulas breves que acercan estas historias a nuevas audiencias.",
+      "“El Blues es Femenino” nació como un podcast en Goodstock. Su primera temporada completa se creó para dar a conocer a las blueseras que participarían en el Día del Blues 2024, el festival que Mujeres del Blues creó en 2023 para visibilizar a las mujeres en la escena del blues chileno. Desde ahí, el podcast siguió con el propósito de visibilizar a las mujeres que han marcado la historia del blues en Chile, desde una mirada crítica y feminista. Luego evolucionó a un minipodcast en YouTube, con cápsulas breves que acercan estas historias a nuevas audiencias.",
     border:
       "A finales de 2025, el proyecto cruzó fronteras con una columna en HideAway Blues producido por Bahía Blanca Blues, transmitido por Taboo Radio (Argentina), llevando la voz de las mujeres del blues chileno a otros territorios y tejiendo redes entre escenas latinoamericanas.",
     whyTitle: "¿Por qué el blues es femenino?",
     why:
       "En nuestro programa exploramos el blues desde una perspectiva feminista. Revisamos su evolución desde los primeros acordes del blues clásico femenino hasta la vibrante escena actual de mujeres del blues en Chile.",
+    hostTitle: "Quién conduce",
+    host:
+      "Soraya Sacaan es la conductora de “El Blues es Femenino”, una iniciativa de Mujeres del Blues.",
+    moreInfo: {
+      before: "Puedes encontrar más información sobre Soraya en Instagram, en ",
+      host: "@sorayasacaan",
+      middle: ", y sobre Mujeres del Blues en Instagram, en ",
+      instagram: "@mujeresdelblues",
+      and: ", y en YouTube, en ",
+      youtube: "@mujeresdelblues",
+      after: ".",
+    },
+    disambiguation:
+      "“El Blues es Femenino” es un podcast de Mujeres del Blues. Un medio independiente que busca visibilizar a las mujeres que han marcado la historia del blues en Chile y el mundo, desde una mirada crítica y feminista.",
     seasonsTitle: "Las temporadas",
     seeEpisodes: "Ver capítulos",
     credits:
