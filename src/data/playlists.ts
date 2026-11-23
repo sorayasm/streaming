@@ -142,4 +142,30 @@ export const podcastPlaylists: PodcastPlaylist[] = [
       },
     ],
   },
+  {
+    id: "temporada-2-youtube",
+    title: "Temporada 2 en YouTube",
+    description: "Los capítulos del #MiniPodcast, en orden.",
+    // The cover of the #MiniPodcast, cropped square from the original (954 × 532).
+    cover: assetUrl("covers/temporada-2.webp"),
+    platforms: [
+      {
+        name: "YouTube",
+        href: "https://www.youtube.com/playlist?list=PLajddc99FTAu-8gDD9sAb8E8dvXnhJmsp",
+      },
+    ],
+  },
+  {
+    id: "temporada-3-youtube",
+    title: "Temporada 3 en YouTube",
+    description: "Las cuatro columnas para HideAway Blues, en orden.",
+    // The HideAway Blues banner, taken from a screenshot and set on a black square.
+    cover: assetUrl("covers/temporada-3.webp"),
+    platforms: [
+      {
+        name: "YouTube",
+        href: "https://www.youtube.com/playlist?list=PLajddc99FTAtXfCAUjKSgLdXC-otsCT3l",
+      },
+    ],
+  },
 ];

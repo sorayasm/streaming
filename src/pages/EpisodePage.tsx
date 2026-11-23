@@ -13,6 +13,7 @@ import {
 } from "@sorayasm/vietri-ds";
 import { ShareButton } from "../components/ShareButton";
 import { content } from "../content";
+import { paths } from "../router/useRoute";
 import {
   adjacentEpisodes,
   episodeHref,
@@ -43,7 +44,7 @@ export function EpisodePage({ id }: { id: string }) {
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 3, md: 5 } }}>
       <Button
-        href="#/"
+        href={paths.home()}
         variant="text"
         startIcon={<Icon icon={icons.ChevronLeft} />}
         sx={{ mb: 2 }}
