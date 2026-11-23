@@ -37,7 +37,7 @@ export const seasons: Season[] = [
     title: "Temporada 1",
     subtitle: "El podcast",
     description:
-      "El podcast nació en Goodstock. Toda esta temporada se creó para dar a conocer a las blueseras que participarían en el Día del Blues 2024, el festival creado por Mujeres del Blues. También está en YouTube.",
+      "El podcast nació en Goodstock, con el propósito de visibilizar a las mujeres que han marcado la historia del blues en Chile. Su primera temporada también está en YouTube.",
     kind: "chapter",
   },
   {

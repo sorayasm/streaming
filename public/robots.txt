@@ -1,5 +1,0 @@
-# Todos los buscadores y asistentes de IA pueden leer el sitio.
-User-agent: *
-Allow: /
-
-Sitemap: https://elbluesesfemenino.cl/sitemap.xml

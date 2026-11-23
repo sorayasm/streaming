@@ -132,30 +132,6 @@ If you prefer a card with its own buttons, this is the format used by `podcastPl
 },
 ```
 
-## Search engines and AI
-
-The app draws its pages with JavaScript, so a crawler that reads only the HTML
-(most AI assistants, and search engines on their first pass) used to see an
-empty page with just the description. `npm run build` now ends with
-`node scripts/prerender.mjs`, which writes into `dist/`:
-
-- A real HTML page for every address, with its text, links, title, description,
-  canonical link and schema.org data (`PodcastSeries`, `PodcastEpisode`, with
-  Soraya Sacaan as host): `/`, `/capitulo/<id>/`, `/sobre/`, `/playlists/` and `404.html`.
-  When the app starts, React replaces that text with the interface.
-- `sitemap.xml`, and `llms.txt`, a plain summary of the podcast for AI assistants.
-
-`public/robots.txt` allows every crawler and points to the sitemap. The router
-reads these real addresses as well as the `#/…` ones, so `/capitulo/t1e05/` opens
-that episode. The pages take their text from `src/content.ts` and `src/data/`,
-so there is nothing else to update when an episode is added.
-
-`SITE_URL` (default `https://elbluesesfemenino.cl`) sets the address used in
-canonical links, the sitemap and `llms.txt`.
-
-After deploying, add the site in Google Search Console and submit
-`https://elbluesesfemenino.cl/sitemap.xml`.
-
 ## Privacy
 
 The player loads nothing from YouTube until someone presses play, and it uses the privacy-enhanced domain `youtube-nocookie.com`. Episode thumbnails are public images served by YouTube (`i.ytimg.com`), so showing them does contact that domain.

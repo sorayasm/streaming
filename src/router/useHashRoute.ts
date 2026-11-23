@@ -28,17 +28,6 @@ export function parseHash(hash: string): Route {
   return { name: "notFound" };
 }
 
-/**
- * Turns a real address into a route, for the static pages that search engines
- * read (`/capitulo/t1e05/`, `/sobre/`, `/playlists/`). `base` is the folder the
- * site is served from ("/" or "/repository/").
- */
-export function parsePath(pathname: string, base = "/"): Route {
-  const path = pathname.startsWith(base) ? pathname.slice(base.length) : pathname;
-  const clean = path.replace(/index\.html$/, "").replace(/^\/+|\/+$/g, "");
-  return parseHash(clean ? `#/${clean}` : "");
-}
-
 /** A hash that points to a page (`#/…`), as opposed to an anchor such as `#content`. */
 function isRouteHash(hash: string): boolean {
   return hash === "" || hash === "#" || hash.startsWith("#/");
@@ -52,9 +41,7 @@ function isRouteHash(hash: string): boolean {
 export function useHashRoute(): Route {
   const [route, setRoute] = useState<Route>(() => {
     const hash = window.location.hash;
-    // A page hash wins; without one, the address itself says the page.
-    if (hash.startsWith("#/")) return parseHash(hash);
-    return parsePath(window.location.pathname, import.meta.env.BASE_URL);
+    return parseHash(isRouteHash(hash) ? hash : "");
   });
 
   useEffect(() => {
