@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { shareLink } from "./share";
 
-const url = "https://elbluesesfemenino.cl/#/capitulo/t3e04";
+const url = "https://elbluesesfemenino.cl/capitulo/t3e04/";
 
 describe("shareLink", () => {
   it("uses the share sheet when the browser has one", async () => {

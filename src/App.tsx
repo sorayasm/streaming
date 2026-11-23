@@ -13,7 +13,7 @@ import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { PlaylistsPage } from "./pages/PlaylistsPage";
 import { SearchPage } from "./pages/SearchPage";
-import { useHashRoute, type Route } from "./router/useHashRoute";
+import { paths, useRoute, type Route } from "./router/useRoute";
 
 function pageTitle(route: Route): string {
   const site = content.siteName;
@@ -52,7 +52,7 @@ function BrandName({ size }: { size: number }) {
 }
 
 function Page() {
-  const route = useHashRoute();
+  const route = useRoute();
   const lastKey = useRef<string | null>(null);
 
   // A single-page app does not reload, so on every page change we update the
@@ -81,16 +81,16 @@ function Page() {
       <SkipLink href="#content">{content.skip}</SkipLink>
       <NavBar
         brand={<BrandName size={36} />}
-        brandHref="#/"
+        brandHref={paths.home()}
         ariaLabel={content.nav.ariaLabel}
         menuLabel={content.nav.menu}
         closeLabel={content.nav.close}
         accentLinks
         links={[
-          { label: content.nav.home, href: "#/", current: route.name === "home" || route.name === "episode" },
-          { label: content.nav.search, href: "#/buscar", current: route.name === "search" },
-          { label: content.nav.playlists, href: "#/playlists", current: route.name === "playlists" },
-          { label: content.nav.about, href: "#/sobre", current: route.name === "about" },
+          { label: content.nav.home, href: paths.home(), current: route.name === "home" || route.name === "episode" },
+          { label: content.nav.search, href: paths.search(), current: route.name === "search" },
+          { label: content.nav.playlists, href: paths.playlists(), current: route.name === "playlists" },
+          { label: content.nav.about, href: paths.about(), current: route.name === "about" },
         ]}
       />
       <Box component="main" id="content" tabIndex={-1} sx={{ outline: "none", minHeight: "60vh" }}>

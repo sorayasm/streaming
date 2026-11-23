@@ -1,4 +1,4 @@
-import { assetUrl } from "./assetUrl";
+import { assetUrl, pageUrl } from "./assetUrl";
 
 /**
  * Seasons and episodes of the podcast, taken from elbluesesfemenino.cl.
@@ -37,7 +37,7 @@ export const seasons: Season[] = [
     title: "Temporada 1",
     subtitle: "El podcast",
     description:
-      "El podcast nació en Goodstock, con el propósito de visibilizar a las mujeres que han marcado la historia del blues en Chile. Su primera temporada también está en YouTube.",
+      "El podcast nació en Goodstock. Toda esta temporada se creó para dar a conocer a las blueseras que participarían en el Día del Blues 2024, el festival creado por Mujeres del Blues. También está en YouTube.",
     kind: "chapter",
   },
   {
@@ -53,7 +53,7 @@ export const seasons: Season[] = [
     title: "Temporada 3",
     subtitle: "Columnas para HideAway Blues",
     description:
-      "Desde finales de 2025, una columna en HideAway Blues (Bahía Blanca Blues, transmitido por Taboo Radio, Argentina) lleva la voz de las mujeres del blues chileno a otros territorios.",
+      "A finales de 2025, cuatro columnas en HideAway Blues (Bahía Blanca Blues, transmitido por Taboo Radio, Argentina) llevaron la voz de las mujeres del blues chileno a otros territorios.",
     kind: "column",
   },
 ];
@@ -174,5 +174,5 @@ export function heroThumbnailUrl(youtubeId: string): string {
 }
 
 export function episodeHref(id: string): string {
-  return `#/capitulo/${id}`;
+  return pageUrl(`capitulo/${encodeURIComponent(id)}/`);
 }

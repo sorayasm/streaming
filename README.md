@@ -21,14 +21,21 @@ npm run dev
 
 ## Pages
 
-The site is a single-page app with hash routing, so it works on any static host without server configuration.
+Every page has a real address, without `#`. Each one is also a real HTML file in
+`dist/` (see "Search engines and AI"), so it opens directly on any static host,
+GitHub Pages included. Inside the site, links change the address without
+reloading, and the browser's back and forward buttons work.
 
 | Address                | Page                                        |
 | ---------------------- | ------------------------------------------- |
-| `#/`                   | Home: a shelf per season, newest first      |
-| `#/capitulo/<id>`      | An episode: player, season list, prev/next  |
-| `#/playlists`          | Playlists on each music service             |
-| `#/sobre`              | About the podcast and its seasons           |
+| `/`                    | Home: a shelf per season, newest first      |
+| `/capitulo/<id>/`      | An episode: player, season list, prev/next  |
+| `/buscar/`             | Search                                      |
+| `/playlists/`          | Playlists on each music service             |
+| `/sobre/`              | About the podcast and its seasons           |
+
+Old addresses with a hash (`/#/capitulo/t1e05`) still work: the site opens the
+page and replaces the address with the new one. Unknown addresses get `404.html`.
 
 On every page change the tab title is updated and focus moves to the new page's heading, so screen readers announce it.
 
@@ -42,7 +49,7 @@ src/
 │   ├── playlists.ts    # playlists, covers and links
 │   └── assetUrl.ts     # URLs of files in public/ (works under a sub-path)
 ├── pages/              # Home, Episode, Playlists, About, NotFound
-├── router/             # hash router
+├── router/             # addresses of the pages (useRoute.ts)
 └── App.tsx             # theme, skip link, header, footer
 ```
 
@@ -68,7 +75,7 @@ Orange is for acting; violet and lilac are for everything else (the design syste
 
 ## Search, continue watching and sharing
 
-- **Search** (`#/buscar`): filters the 29 episodes while you type, ignoring accents and case, by guest, band, season or kind ("columna"). It announces the number of results to screen readers.
+- **Search** (`/buscar/`): filters the 29 episodes while you type, ignoring accents and case, by guest, band, season or kind ("columna"). It announces the number of results to screen readers.
 - **Continue watching**: the last episode you opened is remembered **only in your browser** (`localStorage`). The main button of the home page says what it opens and, if there is a remembered episode, becomes "Continuar viendo".
 - **Share**: each episode has a button that opens the share sheet of the phone, or copies the link where there is none.
 - **Preview**: `index.html` has the Open Graph tags and `public/og.jpg` (1200 x 630), which is what WhatsApp and the social networks show when the site is shared.
@@ -131,6 +138,28 @@ If you prefer a card with its own buttons, this is the format used by `podcastPl
   ],
 },
 ```
+
+## Search engines and AI
+
+The app draws its pages with JavaScript, so a crawler that reads only the HTML
+(most AI assistants, and search engines on their first pass) used to see an
+empty page with just the description. `npm run build` now ends with
+`node scripts/prerender.mjs`, which writes into `dist/`:
+
+- A real HTML page for every address, with its text, links, title, description,
+  canonical link and schema.org data (`PodcastSeries`, `PodcastEpisode`, with
+  Soraya Sacaan as host): `/`, `/capitulo/<id>/`, `/sobre/`, `/playlists/` and `404.html`.
+  When the app starts, React replaces that text with the interface.
+- `sitemap.xml`, and `llms.txt`, a plain summary of the podcast for AI assistants.
+
+`public/robots.txt` allows every crawler and points to the sitemap. The pages take their text from `src/content.ts` and `src/data/`,
+so there is nothing else to update when an episode is added.
+
+`SITE_URL` (default `https://elbluesesfemenino.cl`) sets the address used in
+canonical links, the sitemap and `llms.txt`.
+
+After deploying, add the site in Google Search Console and submit
+`https://elbluesesfemenino.cl/sitemap.xml`.
 
 ## Privacy
 

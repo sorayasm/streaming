@@ -1,6 +1,7 @@
 import Container from "@mui/material/Container";
 import { Button, SectionHeader } from "@sorayasm/vietri-ds";
 import { content } from "../content";
+import { paths } from "../router/useRoute";
 
 export function NotFoundPage() {
   return (
@@ -10,7 +11,7 @@ export function NotFoundPage() {
         title={content.notFound.title}
         description={content.notFound.description}
       />
-      <Button href="#/" variant="contained" sx={{ mt: 4 }}>
+      <Button href={paths.home()} variant="contained" sx={{ mt: 4 }}>
         {content.notFound.back}
       </Button>
     </Container>

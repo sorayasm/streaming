@@ -111,6 +111,6 @@ describe("helpers", () => {
 
   it("builds the thumbnail and the page link of an episode", () => {
     expect(thumbnailUrl("abc")).toBe("https://i.ytimg.com/vi/abc/hqdefault.jpg");
-    expect(episodeHref("t1e05")).toBe("#/capitulo/t1e05");
+    expect(episodeHref("t1e05")).toBe("/capitulo/t1e05/");
   });
 });

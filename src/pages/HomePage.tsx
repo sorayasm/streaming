@@ -2,6 +2,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { Button, ContentRail, Hero, Icon, MediaCard, icons } from "@sorayasm/vietri-ds";
 import { content } from "../content";
+import { paths } from "../router/useRoute";
 import {
   episodeHref,
   episodeImage,
@@ -49,7 +50,7 @@ export function HomePage() {
             >
               {last ? content.hero.continue : content.hero.latest}
             </Button>
-            <Button size="large" variant="outlined" href="#/playlists">
+            <Button size="large" variant="outlined" href={paths.playlists()}>
               {content.hero.listen}
             </Button>
           </>
